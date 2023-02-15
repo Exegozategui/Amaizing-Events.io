@@ -1,0 +1,53 @@
+*{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0px;
+      padding: 0px;
+      box-sizing: border-box;
+  }
+
+ /* Estilos al header */
+
+
+
+
+h1{
+    text-align: center !important;
+    
+        font-size: 4rem;
+    
+        margin-top: 50px;
+    
+        color:rgba(201, 9, 9, 0.847);
+        text-shadow: -4px 3px 6px rgba(43, 1, 38, 0.69);
+}
+    
+
+    
+    
+              
+            
+
+
+
+
+
+.card-group{
+    padding: 1rem;
+    gap: 3rem;
+}
+.carhorizontal{
+    padding: 3rem;
+}
+header{
+    background-color: rgb(221, 210, 222);
+}
+
+main{
+    background-color: rgba(235, 226, 232, 0.306);
+}
+
+footer{
+    text-shadow: -4px 3px 6px rgba(43, 1, 38, 0.69);
+
+}
+
