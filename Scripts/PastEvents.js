@@ -3,6 +3,8 @@ const containerCards = document.querySelector('#contenedor')
 cardsHTML = ""
 let currentDate= data.currentDate
 
+const eventosAnteriores = data.events.filter(evento => evento.date < currentDate);
+
 function imprimirCards(arrayevents){
 
 
@@ -10,7 +12,7 @@ function imprimirCards(arrayevents){
   containerCards.innerHTML= ""
 
 arrayevents.forEach(event =>
-  {if (currentDate > event.date)
+  
  
   cardsHTML += `<div class="card-group">
    <div class="card  text-center border-danger mb-3 " style= "width: 18rem;" >
@@ -24,13 +26,13 @@ arrayevents.forEach(event =>
       </div>
     </div>
   </div>
-  </div>`} )
+  </div>` )
   containerCards.innerHTML = cardsHTML
   
   
 }
 
-imprimirCards(data.events)
+imprimirCards(eventosAnteriores)
 
 
 
@@ -90,7 +92,7 @@ categoriasArray.forEach(categoria => {
 
    checkHTML += `<div class="form-check form-check-inline" > 
                 
-  <input class="form-check-input" type="checkbox" name="categoria" id="checkbox" value="categoria">
+  <input class="form-check-input" type="checkbox" name="categoria" id="checkbox" value="${categoria}">
   <label class="form-check-label" for="inlineCheckbox1">${categoria}</label>
 </div> ` })
 
@@ -110,7 +112,7 @@ checkboxes.forEach(checkbox => {
 
 function filtrarEventos() {
   const categoriasSeleccionadas = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
-  const eventosFiltrados = categoriasSeleccionadas.length > 0 ? data.events.filter(evento => categoriasSeleccionadas.includes(evento.category)) :data.events ;
+  const eventosFiltrados = categoriasSeleccionadas.length > 0 ? eventosAnteriores.filter(evento => categoriasSeleccionadas.includes(evento.category)) :eventosAnteriores ;
 
   cardLimpias();
   imprimirCards(eventosFiltrados);

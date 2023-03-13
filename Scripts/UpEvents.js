@@ -5,6 +5,11 @@ let buscador = document.getElementById("buscador")
 cardsHTML = ""
 let currentDate= data.currentDate
 
+
+const eventosPosteriores = data.events.filter(evento => evento.date >currentDate);
+
+
+
 function imprimirCards(arrayevents){
 
 
@@ -12,7 +17,7 @@ function imprimirCards(arrayevents){
   containerCards.innerHTML= ""
 
 arrayevents.forEach(event =>
-  {if (currentDate < event.date)
+ 
  
   cardsHTML += `<div class="card-group">
    <div class="card  text-center border-danger mb-3 " style= "width: 18rem;" >
@@ -26,13 +31,13 @@ arrayevents.forEach(event =>
       </div>
     </div>
   </div>
-  </div>`} )
+  </div>`)
   containerCards.innerHTML = cardsHTML
   
   
 }
 
-imprimirCards(data.events)
+imprimirCards(eventosPosteriores)
 
 
 
@@ -84,7 +89,7 @@ categoriasArray.forEach(categoria => {
 
    checkHTML += `<div class="form-check form-check-inline" > 
                 
-  <input class="form-check-input" type="checkbox" name="categoria" id="checkbox" value="categoria">
+  <input class="form-check-input" type="checkbox" name="categoria" id="checkbox" value="${categoria}">
   <label class="form-check-label" for="inlineCheckbox1">${categoria}</label>
 </div> ` })
 
@@ -95,6 +100,7 @@ categoriasDiv.innerHTML= checkHTML
 
 // Codigo para filtrar por checkbox
 
+
 //funcion que agrega un listener a cada check
 const checkboxes = document.querySelectorAll('[name="categoria"]');
 checkboxes.forEach(checkbox => {
@@ -104,7 +110,7 @@ checkboxes.forEach(checkbox => {
 function filtrarEventos() {
   const categoriasSeleccionadas = Array.from(document.querySelectorAll('[name="categoria"]:checked')).map(checkbox => checkbox.value);
 
-    const eventosFiltrados = data.events.filter(evento => categoriasSeleccionadas.includes(evento.category));
-  console.log(eventosFiltrados)
-
+  const eventosFiltrados = categoriasSeleccionadas.length > 0 ? eventosPosteriores.filter(evento => categoriasSeleccionadas.includes(evento.category)) :eventosPosteriores ;
+  cardLimpias();
+   imprimirCards(eventosFiltrados);;
 }
