@@ -8,9 +8,10 @@ let buscador = document.getElementById("buscador")
 
 cardsHTML = ""
 
-//CODIGO PARA GENERAR CARDS, Y FILTRAR POR INPUT Y CHECKBOX
+//CODIGO PARA GENERAR CARDS.
 
 function imprimirCards(arrayevents){
+
 
 
   containerCards.innerHTML= ""
@@ -26,20 +27,25 @@ arrayevents.forEach(event =>
       <p class="card-text">${event.description}</p>
       <div class="card-footer">
       <a class="card-text text-danger ">${event.price}</a>
-      <input type="button" onclick="seeDetail('${event.id}')class="btn btn-danger" " value="ver mas" id="button">
+      <a href="./Details.html?_id=${event._id}" class="btn btn-danger">ver mas</a>
       </div>
     </div>
   </div>
   </div>` )
   containerCards.innerHTML = cardsHTML
   
-  
+}
+function seeDetail(_id) {
+  window.location.href = `./Details.html?_id=${_id}`
 }
 
 imprimirCards(data.events)
 
 
 // FILTRAR POR INPUT
+const mensaje = document.getElementById('mensaje');
+
+
 buscador.addEventListener("input", () => {
   const busqueda = buscador.value.toLowerCase();
 
@@ -50,30 +56,61 @@ buscador.addEventListener("input", () => {
     return nombre.includes(busqueda) || descripcion.includes(busqueda);
   });
 
-   cardLimpias();
-
-  imprimirCards(eventosEncontrados);
+  if (eventosEncontrados.length === 0) {
+    containerCards.style.display = 'none';
+    mensaje.style.display = 'block';
+  } else {
+   
+    cardLimpias();
+    imprimirCards(eventosEncontrados);;
+  }
 });
+
+   
+
 
 // funcion que limpia cards
 function cardLimpias(){
   cardsHTML=""
 }
 
-//filtrar por categoria
+//Generar checkbox dinamicos.
 
+
+const categoriasSet = new Set(data.events.map(evento => evento.category));
+const categoriasArray = Array.from(categoriasSet);
+
+const categoriasDiv = document.getElementById('navbarSupportedContent');
+
+checkHTML= ""
+
+categoriasArray.forEach(categoria => {
+ 
+
+   checkHTML += `<div class="form-check form-check-inline" > 
+                
+  <input class="form-check-input" type="checkbox" name="categoria" id="checkbox" value="${categoria}">
+  <label class="form-check-label" for="inlineCheckbox1">${categoria}</label>
+</div> ` })
+
+
+categoriasDiv.innerHTML= checkHTML
+
+// Codigo para filtrar por checkbox
+
+//funcion que agrega un listener a cada check
 const checkboxes = document.querySelectorAll('[name="categoria"]');
 checkboxes.forEach(checkbox => {
   checkbox.addEventListener('change', filtrarEventos);
-  function filtrarEventos() {
-    const categoriasSeleccionadas = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
-    const eventosFiltrados = categoriasSeleccionadas.length > 0 ? data.events.filter(evento => categoriasSeleccionadas.includes(evento.category)) : data.events;
-    cardLimpias();
-    imprimirCards(eventosFiltrados);
-  }
 });
 
+function filtrarEventos() {
+  const categoriasSeleccionadas = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
+  const eventosFiltrados = categoriasSeleccionadas.length > 0 ? data.events.filter(evento => categoriasSeleccionadas.includes(evento.category)) :data.events ;
+  
+  cardLimpias();
 
+  imprimirCards(eventosFiltrados)
 
-
+}
 

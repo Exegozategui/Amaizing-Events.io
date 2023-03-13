@@ -7,7 +7,9 @@
 
  /* Estilos al header */
 
-
+ #mensaje {
+    color: red;
+  }
 
 h1{
     text-align: center !important;
