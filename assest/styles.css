@@ -7,8 +7,9 @@
 
  /* Estilos al header */
 
-
-
+ #mensaje {
+    color: red;
+  }
 
 h1{
     text-align: center !important;
@@ -20,6 +21,9 @@ h1{
         color:rgba(201, 9, 9, 0.847);
         text-shadow: -4px 3px 6px rgba(43, 1, 38, 0.69);
 }
+
+
+
     
 .card-group{
     
