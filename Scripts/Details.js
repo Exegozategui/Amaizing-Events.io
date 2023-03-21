@@ -1,12 +1,26 @@
+//CODIGO PARA TRAER DATOS DE API
+
+let eventosApi = []
+
+function traerDatos(){
+  /* fetch('./Data.json') */
+  fetch('https://mindhub-xj03.onrender.com/api/amazing')
+  .then(response => response.json())
+  .then(datosApi =>{
+      console.log(datosApi)
+      eventosApi= datosApi.events
+      console.log(eventosApi)
+
 const queryString = location.search
 
 const params = new URLSearchParams(queryString)
 
 const _id = params.get("_id")
 
-const eventos = data.events.find(evento => evento._id == _id)
+const eventos = eventosApi.find(evento => evento._id == _id)
 
- const container= document.getElementById("container-detail")
+
+const container= document.getElementById("container-detail")
  let html = ""
 
 
@@ -32,3 +46,9 @@ const eventos = data.events.find(evento => evento._id == _id)
 </div> `
 
 container.innerHTML= html
+
+})
+.catch(error => console.log(error.message))
+}
+
+traerDatos()
